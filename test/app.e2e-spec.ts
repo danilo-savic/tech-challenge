@@ -8,7 +8,7 @@ import {
 } from 'apollo-server-testing';
 import { ApolloServerBase } from 'apollo-server-core';
 
-import { AppModule } from '@src/app.module';
+import { AppModule } from '@src/modules/app/app.module';
 
 describe('GraphQL', () => {
   let app: INestApplication;

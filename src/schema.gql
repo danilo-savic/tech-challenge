@@ -2,7 +2,57 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Company {
+  id: Int!
+  title: String!
+  employees: [Employee!]
+}
+
+type Partner {
+  id: Int!
+  name: String!
+  revenue: Float!
+  vouchers: [Voucher!]!
+}
+
+type Voucher {
+  id: Int!
+  amount: Int!
+  partnerId: Int!
+  partner: Partner!
+}
+
+type Order {
+  id: Int!
+  date: DateTime!
+  employeeId: Int!
+  employee: Employee!
+  voucherId: Int!
+  voucher: Voucher!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Employee {
+  id: Int!
+  name: String!
+  budget: Int!
+  companyId: Int!
+  company: Company!
+  orders: [Order!]!
+  month: String
+  consumption: Int
+  tax: Float
+  net: Float
+}
+
 type Query {
   """App info."""
   appInfo: String!
+  companies(month: String = "2022-1", benefits: Int = 10): [Company!]!
+  company(month: String = "2022-1", companyId: Int!): Company!
+  partners: [Partner!]!
 }

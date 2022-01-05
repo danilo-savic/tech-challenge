@@ -13,8 +13,61 @@ The business domain: every employee of a company has a certain budget to spend o
 The API should be able to answer the following three requests (note: It’s not a deal breaker if you are not able to implement all three requests):
 
 - List all employees grouped by company that have more than 10€ in benefits left to spend this month. This query should be flexible in such a way that you can provide a past month as an argument as well.
+    ```
+    query listGroupedEmployees($benefits: Int!, $month: String) {
+        companies(benefits: $benefits, month: $month) {
+            id
+            title
+            employees {
+                id
+                name
+                budget
+                month
+                consumption
+            }
+        }
+    }
+    ```
 - A list of employees from a single company with their spending in a certain month. It should list the money per employee that was spent up to 44€ as tax free and the money above this threshold should be split up by net salary and taxes. There should also be a total per employee.
+    ```
+    query listEmployeesOfCompany($companyId: Int!, $month: String) {
+        company(companyId: $companyId, month: $month) {
+            id
+            title
+            employees {
+                id
+                name
+                budget
+                month
+                consumption
+                tax
+                net
+                orders {
+                    id
+                    date
+                    voucher {
+                        id
+                        amount
+                    }
+                }
+            }
+        }
+    }
+    ```
 - List the revenue per partner.
+    ```
+    query listPartnersWithRevenue {
+        partners {
+            id
+            name
+            revenue
+            vouchers {
+                id
+                amount
+            }
+        }
+    }
+    ```
 
 Our challenge for you is to write the application based on NestJS and it should include the GraphQL Playground. You are free in your choice of other used packages.
 
